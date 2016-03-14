@@ -1,0 +1,49 @@
+# 0-引导
+
+在这一步，你会对angular最重要的代码文件变得熟悉起来。你也同样可以学习到如何启动使用angular开发的服务，同时让应用在浏览器端跑起来。
+
+在你开始之前，确保你已经配置好了开发环境并且安装了所有的依赖。
+
+在angular-phonecat目录，运行以下命令：
+
+> git checkout -f step-0
+
+这个设置会让你的工作区域回到第0步。
+
+在接下来的每一步你都必须重复这一步，或者改变数字来到你当前的状态。这样会避免代码的丢失。
+
+如果你还没有搞定，你需要使用 npm install 来安装依赖。
+
+为了能够在浏览器中看到效果，打开一个独立的窗口，然后运行 npm start来运行服务器。然后打开浏览器窗口，输入http://localhost:8000/app/
+
+现在你就可以看到页面了。虽然不是很high，但是没关系。
+
+当前页面是由以下代码构建的。以下代码包括我们接下来编程中的一些关键点。
+
+		<!doctype html>
+		<html lang="en" ng-app>
+		<head>
+		  <meta charset="utf-8">
+		  <title>My HTML File</title>
+		  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+		  <link rel="stylesheet" href="css/app.css">
+		  <script src="bower_components/angular/angular.js"></script>
+		</head>
+		<body>
+
+		  <p>Nothing here {{'yet' + '!'}}</p>
+
+		</body>
+		</html>
+
+这段代码到底做了什么？
+
+ng-app 指令
+
+		<html ng-app>
+
+这个ng-app属性代表了angularjs中的一个叫做ng-app的指令。（angularjs里指令有两种写法，ng-app或者ngApp，相互补充，均可）。这个指令告诉html我们angular管辖的边界。它使得开发者更为灵活的开发应用，angular可以接管整个页面。也可以只接管页面的一部分。
+
+angularJs的script标签
+> <script src="bower_components/angular/angular.js">
+这个里面是angularJs的路径，他会在HTML被完全加载完后开始执行。
