@@ -1,0 +1,53 @@
+# XHR和依赖注入
+
+受够了用三个电话的数据集进行编码了！让我们使用angular自带的服务$http来从服务器获取更多数据！我们会使用angular的依赖注入来向controller提供服务。
+
+这儿一共有20条从服务器端获取的数据。
+
+## 数据
+你项目中的app/phones/phones.json文件是包括很多手机数据的数据集，他们以json的格式存在一个数组里。
+如下所示
+
+	[
+	 {
+	  "age": 13,
+	  "id": "motorola-defy-with-motoblur",
+	  "name": "Motorola DEFY\u2122 with MOTOBLUR\u2122",
+	  "snippet": "Are you ready for everything life throws your way?"
+	  ...
+	 },
+	...
+	]
+
+## 控制器
+当我们使用控制器的$http服务来抓取服务器的数据时，$http只是众多angular服务中的一个，它们都用来完成webapp里的一些相同的操作。当你需要的时候，angular会将这些服务注入。
+
+这些服务通过angular的DI系统进行统一管理。依赖注入会使你的webapp拥有更好的结构及更低的耦合。
+
+app/js/controllers.js:
+
+	var phonecatApp = angular.module('phonecatApp', []);
+
+	phonecatApp.controller('PhoneListCtrl', function ($scope, $http) {
+	  $http.get('phones/phones.json').success(function(data) {
+	    $scope.phones = data;
+	  });
+
+	  $scope.orderProp = 'age';
+	});
+
+
+$http向服务器发送了一次get请求，要求phones/phones.json的数据（路径是相对于index.html的）。服务器返回json格式的数据作为回应。（数据也可以动态的由服务器进行发送。对于浏览器和我们的app来说，他们并没有什么不同。为了简单，我们在这个范例中使用了json文件）。
+
+如果你想在angular中使用服务，你只需很简单的将服务名称作为参数传过来即可。需要说明的是这些参数的名字是很重要的，因为注入时需要靠它们来寻找依赖。
+
+![](https://docs.angularjs.org/img/tutorial/tutorial_05.png)
+
+## $前缀命名惯例
+你可以创建你自己的service服务，但是我们要到第11章的时候才会仔细讲到他。就命名规则来说，angular的内置服务，scope方法，以及一些其他的API，都是以￥开头的。
+
+$就是为了标示angular内置的一些服务。为了避免冲突，在你自定义自己的服务时，要避免使用$开头。
+
+如果你检查一个scope，会发现了一些属性是以$$开头的。这些属性是私有的，不应修改。
+
+## 关于压缩

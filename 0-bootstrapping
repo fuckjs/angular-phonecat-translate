@@ -44,6 +44,36 @@ ng-app 指令
 
 这个ng-app属性代表了angularjs中的一个叫做ng-app的指令。（angularjs里指令有两种写法，ng-app或者ngApp，相互补充，均可）。这个指令告诉html我们angular管辖的边界。它使得开发者更为灵活的开发应用，angular可以接管整个页面。也可以只接管页面的一部分。
 
-angularJs的script标签
-> <script src="bower_components/angular/angular.js">
-这个里面是angularJs的路径，他会在HTML被完全加载完后开始执行。
+###### angularJs的script标签
+
+    <script src="bower_components/angular/angular.js">
+
+这个里面是angularJs的路径，他注册了一个回调函数，会在HTML被完全加载完后开始执行。这个函数执行时，angular会寻找ng-app指令。如果找到了，他会把ng-app所在的节点当作所管辖区域的根结点。
+
+###### 使用一个双大括号表达式进行绑定
+> Nothing here {{'yet' + '!'}}这行代码揭示了angular的两个核心特性
+* 绑定使用双大括号{{}}表示
+* 一个简单的表达式'yet' + '!'在这儿被使用。
+
+这个绑定告诉angular他应该执行一个表达式，并且在绑定的地方插入绑定的数据。这种绑定不是一次性的，任何对绑定数据的修改都将反映出来。
+
+正如所看到的，页面显示出了“nothing here yet”
+
+## 启动angularJs app
+
+使用ng-app指令自动启动augular是一种大多数情况下很简单，也很常用的方法。但是在高端用法里，比如使用script进行加载，我们会使用一种[更加必要及成熟的方法](https://docs.angularjs.org/guide/bootstrap)来启动。
+
+在angular启动的时候有3件很重要的事。
+
+1. injector会被创建
+2. rootscope会被创建出来
+3. angular会从ng-app所在的根节点开始编译Dom，在沿路中相关指令和绑定的数据会被处理。
+
+一旦应用被启动，他会等待浏览器相关事件（例如click，keypress和服务器响应）来对数据模型model进行修改。一旦有事件被触发，他会判断相应数据模型是否发生了改变。一旦发生改变，angular会在视图中显示出来。
+
+现在我们的应用的结构非常的简单，只有一个数据绑定和一个指令，并且我们的数据模型是空的。这些马上就会迎来改变。
+
+![](https://docs.angularjs.org/img/tutorial/tutorial_00.png)
+
+## 现在我的工作区里都是些什么文件？
+你的工作区的大部分文件都来自 [angular-seed project ](https://github.com/angular/angular-seed),用来初始化angular项目。

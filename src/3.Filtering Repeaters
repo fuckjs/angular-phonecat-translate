@@ -1,0 +1,42 @@
+# 过滤repeat项
+
+我们上一节做了很多基础性的工作，现在我们可以做一些简单的东西了。
+
+现在我们有了一个搜索框。现在右侧部分显示的数据取决于我们往搜索框输入的东西。
+
+使用 git checkout -f step-3 进行版本调整。
+
+## 控制器 
+我们对控制器没有做任何改变
+
+## 模板
+app/index.html:
+
+	<div class="container-fluid">
+	  <div class="row">
+	    <div class="col-md-2">
+	      <!--Sidebar content-->
+
+	      Search: <input ng-model="query">
+
+	    </div>
+	    <div class="col-md-10">
+	      <!--Body content-->
+
+	      <ul class="phones">
+	        <li ng-repeat="phone in phones | filter:query">
+	          {{phone.name}}
+	          <p>{{phone.snippet}}</p>
+	        </li>
+	      </ul>
+
+	    </div>
+	  </div>
+	</div>
+
+我们添加了一个标准的input框，并且使用angular的过滤器功能来影响页面的显示。
+
+这使得我们在输入框输入要求，而过滤的结果会即时显示在右侧的列表上。新的代码展示了以下特性。
+
+* 数据绑定。这是angular的一项核心特性。页面加载时，angular把输入框的内容和数据模型上的数据进行绑定并同步。
+在这段代码里，用户向输入框输入的数据会立刻对应到过滤器上。

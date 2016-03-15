@@ -1,0 +1,73 @@
+# 2. angular模板
+
+是时候让angular动起来了。我们同样可以对我们即将添加的控制器进行验证。
+
+这段代码有很多种写法。对于angular App，我们推荐使用MVC设计模式来解耦。有了这种思想，我们来使用一点点angular和js来为我们的app添加数据模型，视图和控制器
+
+> 使用git checkout -f step-2来使代码回滚。
+
+## 视图和模板
+
+在angularjs里面，视图是数据模型通过模板的投影。这意味着无论数据模型怎么变，anguler都会找到相应的绑定，来更新视图。
+
+app/index.html:
+
+	<html ng-app="phonecatApp">
+	<head>
+	  ...
+	  <script src="bower_components/angular/angular.js"></script>
+	  <script src="js/controllers.js"></script>
+	</head>
+	<body ng-controller="PhoneListCtrl">
+
+	  <ul>
+	    <li ng-repeat="phone in phones">
+	      <span>{{phone.name}}</span>
+	      <p>{{phone.snippet}}</p>
+	    </li>
+	  </ul>
+
+	</body>
+	</html>
+
+这样 我们通过ng-repeat指令以及两个angularjs表达式替换掉了很难书写的ul-li代码.
+
+li标签上的ng-repeat=“phone in phones”属性是一个angular指令。这个重复器指令告诉angular为每个phone创建一个li标签。
+
+双括号里的表达式{{phone.name}}和{{phone.snippet}}会被表达式里的相关值替换掉。
+
+我们得到了一个新的叫做ng-repeat的指令，把controller控制器和我们的标签联系了起来。两个大括号里的表达式{{phone.name}}和{{phone.snippet}}表示数据绑定，指向我们的数据模型，在我们的PhoneListCtrl控制器里。
+
+![](https://docs.angularjs.org/img/tutorial/tutorial_02.png)
+
+## 数据模型和控制器
+一个简单的数据模型在我们PhoneListCtrl控制器里被实例化。而控制器只是一个使用$scope作为参数的函数。
+
+app/js/controllers.js:
+
+	var phonecatApp = angular.module('phonecatApp', []);
+
+	phonecatApp.controller('PhoneListCtrl', function ($scope) {
+	  $scope.phones = [
+	    {'name': 'Nexus S',
+	     'snippet': 'Fast just got faster with Nexus S.'},
+	    {'name': 'Motorola XOOM™ with Wi-Fi',
+	     'snippet': 'The Next, Next Generation tablet.'},
+	    {'name': 'MOTOROLA XOOM™',
+	     'snippet': 'The Next, Next Generation tablet.'}
+	  ];
+	});
+
+在这儿我们声明了一个叫做PhoneListCtrl的控制器，并且在angular里一个叫做phonecatApp的模块里进行注册。注意，我们的ng-app指令将phonecatApp模块作为初始化时的起始模块。
+
+尽管我们的控制器目前为止还没有完成太多事儿，他却扮演了一个很重要的角色。通过想你的数据模型提供上下文，控制器允许我们在数据模型和视图之间添加数据绑定。我们将展示，数据和逻辑部分如下进行连接：
+
+* 在body标签上的ng-controller指令，给出了我们控制器的名字：PhoneListCtrl
+* PhoneListCtrl控制器将手机数据和注入到controller中的$scope联系起来。这个scope是从rootscope上原型继承下来的。所有<body ng-controller="PhoneListCtrl">标签下绑定的数据都可以找到这个scope。
+
+
+## Scope
+scope的概念在angular里很关键。他可以看作能使模板，数据和控制器协同工作的胶水。angular就是使用scope以及模板中的表达式来让数据和视图分离，而且能保持同步。任何对模型的改变都会影响视图，任何视图的改变也会影响模型。
+
+## 测试
+angular使用的数据视图分离的方法，让他在开发时更容易进行测试。如果一个控制器在全局命名空间下都可以获取到，我们就可以很简单的使用scope来实例化他。
